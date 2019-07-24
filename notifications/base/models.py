@@ -10,6 +10,7 @@ from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ImproperlyConfigured
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.db.models.query import QuerySet
 from django.utils import timezone
@@ -220,7 +221,7 @@ class AbstractNotification(models.Model):
     deleted = models.BooleanField(default=False, db_index=True)
     emailed = models.BooleanField(default=False, db_index=True)
 
-    data = JSONField(blank=True, null=True)
+    data = JSONField(blank=True, null=True, encoder=DjangoJSONEncoder)
     objects = NotificationQuerySet.as_manager()
 
     class Meta:
